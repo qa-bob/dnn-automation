@@ -1,0 +1,92 @@
+version: '3.8'
+
+services:
+  # Main test service
+  test:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      - TEST_ENV=${TEST_ENV:-dev}
+      - BROWSER=${BROWSER:-chrome}
+      - HEADLESS=${HEADLESS:-true}
+    volumes:
+      - ../reports:/usr/src/app/reports
+      - ../screenshots:/usr/src/app/screenshots
+      - ../downloads:/usr/src/app/downloads
+    command: python run_tests.py --html-report --browser chrome --headless
+    networks:
+      - test-network
+
+  # Smoke tests service
+  test-smoke:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      - TEST_ENV=${TEST_ENV:-dev}
+      - BROWSER=${BROWSER:-chrome}
+      - HEADLESS=${HEADLESS:-true}
+    volumes:
+      - ../reports:/usr/src/app/reports
+      - ../screenshots:/usr/src/app/screenshots
+    command: python run_tests.py --smoke --html-report --browser chrome --headless
+    networks:
+      - test-network
+
+  # Regression tests service
+  test-regression:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      - TEST_ENV=${TEST_ENV:-dev}
+      - BROWSER=${BROWSER:-chrome}
+      - HEADLESS=${HEADLESS:-true}
+    volumes:
+      - ../reports:/usr/src/app/reports
+      - ../screenshots:/usr/src/app/screenshots
+    command: python run_tests.py --regression --html-report --browser chrome --headless --parallel --workers 4
+    networks:
+      - test-network
+
+  # Performance tests service
+  test-performance:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      - TEST_ENV=${TEST_ENV:-dev}
+      - BROWSER=${BROWSER:-chrome}
+      - HEADLESS=${HEADLESS:-true}
+    volumes:
+      - ../reports:/usr/src/app/reports
+      - ../screenshots:/usr/src/app/screenshots
+    command: python run_tests.py --performance --html-report --browser chrome --headless
+    networks:
+      - test-network
+
+  # Cross-browser tests (Firefox)
+  test-firefox:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      - TEST_ENV=${TEST_ENV:-dev}
+      - BROWSER=firefox
+      - HEADLESS=${HEADLESS:-true}
+    volumes:
+      - ../reports:/usr/src/app/reports
+      - ../screenshots:/usr/src/app/screenshots
+    command: python run_tests.py --smoke --html-report --browser firefox --headless
+    networks:
+      - test-network
+
+networks:
+  test-network:
+    driver: bridge
+
+volumes:
+  reports:
+  screenshots:
+  downloads:

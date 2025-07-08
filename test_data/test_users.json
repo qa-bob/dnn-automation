@@ -1,0 +1,47 @@
+{
+  "valid_users": {
+    "admin": {
+      "username": "admin",
+      "password": "admin",
+      "role": "administrator"
+    },
+    "form_user": {
+      "username": "tomsmith",
+      "password": "SuperSecretPassword!",
+      "role": "user"
+    }
+  },
+  "invalid_users": {
+    "invalid_username": {
+      "username": "invalid_user",
+      "password": "SuperSecretPassword!",
+      "expected_error": "Your username is invalid!"
+    },
+    "invalid_password": {
+      "username": "tomsmith",
+      "password": "invalid_password",
+      "expected_error": "Your password is invalid!"
+    },
+    "empty_credentials": {
+      "username": "",
+      "password": "",
+      "expected_error": "Your username is invalid!"
+    }
+  },
+  "test_data": {
+    "prompt_texts": [
+      "Hello World",
+      "Test Message",
+      "Special Characters: !@#$%^&*()",
+      "Numbers: 123456789",
+      ""
+    ],
+    "input_numbers": [
+      0, 1, -1, 42, 999, -999, 1234567890
+    ],
+    "key_presses": [
+      "ENTER", "SPACE", "TAB", "ESCAPE", 
+      "A", "B", "Z", "0", "9"
+    ]
+  }
+}

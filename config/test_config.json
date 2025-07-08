@@ -1,0 +1,37 @@
+{
+  "environments": {
+    "dev": {
+      "base_url": "http://the-internet.herokuapp.com",
+      "timeout": 10,
+      "headless": true
+    },
+    "staging": {
+      "base_url": "http://the-internet.herokuapp.com",
+      "timeout": 15,
+      "headless": true
+    },
+    "prod": {
+      "base_url": "http://the-internet.herokuapp.com",
+      "timeout": 20,
+      "headless": false
+    }
+  },
+  "browsers": ["chrome", "firefox"],
+  "test_categories": [
+    "authentication",
+    "dynamic_content",
+    "user_interactions",
+    "file_operations",
+    "navigation",
+    "advanced"
+  ],
+  "parallel_execution": {
+    "max_workers": 4,
+    "enabled": true
+  },
+  "reporting": {
+    "html_report": true,
+    "screenshot_on_failure": true,
+    "video_recording": false
+  }
+}
